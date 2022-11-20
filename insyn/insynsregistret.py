@@ -1,9 +1,9 @@
-import requests
-
-from trade import TradeEntry
-from soup_utils import get_trade_entries_from_page
 from datetime import date
 from typing import List
+
+import requests
+from soup_utils import get_trade_entries_from_page
+from trade import TradeEntry
 
 BASE_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/Search/Search?"
 

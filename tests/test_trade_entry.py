@@ -1,6 +1,7 @@
+from datetime import date
+
 import pytest
 from context import TradeEntry
-from datetime import date
 
 
 @pytest.fixture

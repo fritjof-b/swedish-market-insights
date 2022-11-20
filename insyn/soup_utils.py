@@ -1,7 +1,7 @@
-from bs4 import BeautifulSoup
-
-from insynsregistret import TradeEntry
 from typing import List
+
+from bs4 import BeautifulSoup
+from insynsregistret import TradeEntry
 
 
 def get_trade_entries_from_page(page: bytes) -> List[TradeEntry]:

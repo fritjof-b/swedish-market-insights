@@ -1,5 +1,6 @@
-from context import utils
 from datetime import date
+
+from context import utils
 
 
 def test_date_from_string_pass():

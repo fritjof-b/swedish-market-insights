@@ -4,8 +4,8 @@ from datetime import date
 from insyn.utils import (
     date_from_string,
     is_relative,
-    parse_volume_from_string,
     parse_price_from_string,
+    parse_volume_from_string,
 )
 
 
