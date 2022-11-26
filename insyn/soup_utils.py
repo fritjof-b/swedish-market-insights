@@ -1,10 +1,9 @@
-from typing import List
-
 from bs4 import BeautifulSoup
-from insynsregistret import TradeEntry
+
+from trade import TradeEntry
 
 
-def get_trade_entries_from_page(page: bytes) -> List[TradeEntry]:
+def get_trade_entries_from_page(page: bytes) -> list[TradeEntry]:
     trade_entries = []
     soup = BeautifulSoup(page, "html.parser")
     table_rows = soup.find_all("tr")
@@ -16,5 +15,8 @@ def get_trade_entries_from_page(page: bytes) -> List[TradeEntry]:
     return trade_entries
 
 
-def find_next_button(page: bytes):
-    pass
+def find_href_for_next_page(page: bytes) -> str:
+    soup = BeautifulSoup(page, "html.parser")
+    next_button = soup.find('li', class_="next")
+    href = next_button.a.get("href") if next_button.a else ''
+    return href
