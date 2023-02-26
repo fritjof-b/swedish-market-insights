@@ -44,7 +44,7 @@ class TradeEntry:
         volume_unit = row[11]
         price = parse_price_from_string(row[12])
         currency = row[13]
-        status = row[14]
+        status = row[14]  # TODO Maybe fetch link to report here instead
         details = row[15]
 
         return TradeEntry(
