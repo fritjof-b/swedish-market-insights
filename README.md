@@ -4,7 +4,7 @@ Insynsregistret is a small package for fetching inside trades made in Sweden.
 The data is collected with `requests` and parsed with `BeautifulSoup4`.
 All data is publicly available on Finansinspektionen's [website](https://fi.se/).
 
-<!-- ## Installation -->
+## Installation
 
 <!-- `pip install insyn` -->
 
@@ -16,3 +16,43 @@ from insyn import insynsregistret
 api = insynsregistret.Insynsregistret()
 recent_inside_trades = api.get_trades_by_transaction_date()
 ```
+
+## Features
+
+- Fetch inside trades by transaction date
+- Fetch inside trades by publication date
+
+## Examples
+
+### Fetch inside trades by transaction date
+
+```python3
+from insyn import insynsregistret
+from datetime import date
+
+api = insynsregistret.Insynsregistret()
+trades = api.get_trades_by_transaction_date(
+    from_date=date(2020, 1, 1),
+    to_date=date(2020, 1, 31))
+```
+
+### Fetch inside trades by publication date
+
+```python3
+from datetime import date
+from insyn import insynsregistret
+
+api = insynsregistret.Insynsregistret()
+trades = api.get_trades_by_publish_date(
+    from_date=date(2022, 10, 8),
+    to_date=date(2022, 10, 10))
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request on GitHub if you have any suggestions or
+improvements.
+
+## License
+
+This project is licensed under the MIT License.
