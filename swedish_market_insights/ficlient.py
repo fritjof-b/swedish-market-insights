@@ -14,10 +14,10 @@ BASE_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/Search/Search?"
 
 
 def _get_trades_by_date_query(
-    from_query: str,
-    to_query: str,
-    from_date: date,
-    to_date: date,
+        from_query: str,
+        to_query: str,
+        from_date: date,
+        to_date: date,
 ) -> list[TradeEntry]:
     """
     Helper function to fetch trades by date query.
@@ -41,13 +41,13 @@ def _get_trades_by_date_query(
     return result
 
 
-class Insynsregistret:
+class FiClient:
     def __init__(self) -> None:
         pass
 
     @staticmethod
     def get_trades_by_publish_date(
-        from_date: date = date.today(), to_date: date = date.today()
+            from_date: date = date.today(), to_date: date = date.today()
     ) -> list[TradeEntry]:
         """
         Fetch trades by publish date.
@@ -61,7 +61,7 @@ class Insynsregistret:
 
     @staticmethod
     def get_trades_by_transaction_date(
-        from_date: date = date.today(), to_date: date = date.today()
+            from_date: date = date.today(), to_date: date = date.today()
     ) -> list[TradeEntry]:
         """
         Fetch trades by transaction date.
@@ -74,7 +74,7 @@ class Insynsregistret:
         )
 
 
-insyn = Insynsregistret()
+insyn = FiClient()
 trades = insyn.get_trades_by_transaction_date(date(2022, 10, 8), date(2022, 10, 10))
 
 print(len(trades))

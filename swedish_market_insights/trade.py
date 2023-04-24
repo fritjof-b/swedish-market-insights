@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 
-from insyn.utils import (
+from swedish_market_insights.utils import (
     date_from_string,
     is_relative,
     parse_price_from_string,
