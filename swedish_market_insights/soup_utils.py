@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-from trade import TradeEntry
+from .trade import TradeEntry
 
 
 def get_trade_entries_from_page(page: bytes) -> list[TradeEntry]:

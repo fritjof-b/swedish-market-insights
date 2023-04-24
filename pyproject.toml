@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "swedish_market_insights"
-version = "0.1.0"
+version = "0.1.1"
 description = "Package to scrape the Finansinspektion's registers"
 authors = ["Fritjof Bengtsson <fritjof.folkeson@gmail.com>"]
 license = "MIT"

@@ -3,8 +3,8 @@ from datetime import date
 
 import requests
 
-from soup_utils import get_trade_entries_from_page, find_href_for_next_page
-from trade import TradeEntry
+from .soup_utils import get_trade_entries_from_page, find_href_for_next_page
+from .trade import TradeEntry
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
