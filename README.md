@@ -1,6 +1,6 @@
-# Insynsregistret
+# Swedish Market Insights
 
-Insynsregistret is a small package for fetching inside trades made in Sweden.
+SMI is a small package for fetching inside trades made in Sweden.
 The data is collected with `requests` and parsed with `BeautifulSoup4`.
 All data is publicly available on Finansinspektionen's [website](https://fi.se/).
 
@@ -11,9 +11,9 @@ All data is publicly available on Finansinspektionen's [website](https://fi.se/)
 ## Usage
 
 ```python3
-from insyn import insynsregistret
+from swedish_market_insights import ficlient
 
-api = insynsregistret.Insynsregistret()
+api = ficlient.FiClient()
 recent_inside_trades = api.get_trades_by_transaction_date()
 ```
 
@@ -27,10 +27,10 @@ recent_inside_trades = api.get_trades_by_transaction_date()
 ### Fetch inside trades by transaction date
 
 ```python3
-from insyn import insynsregistret
+from swedish_market_insights import ficlient
 from datetime import date
 
-api = insynsregistret.Insynsregistret()
+api = ficlient.FiClient()
 trades = api.get_trades_by_transaction_date(
     from_date=date(2020, 1, 1),
     to_date=date(2020, 1, 31))
@@ -40,9 +40,9 @@ trades = api.get_trades_by_transaction_date(
 
 ```python3
 from datetime import date
-from insyn import insynsregistret
+from swedish_market_insights import ficlient
 
-api = insynsregistret.Insynsregistret()
+api = ficlient.FiClient()
 trades = api.get_trades_by_publish_date(
     from_date=date(2022, 10, 8),
     to_date=date(2022, 10, 10))
