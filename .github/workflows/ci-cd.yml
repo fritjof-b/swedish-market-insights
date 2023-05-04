@@ -75,11 +75,12 @@ jobs:
         run: |
           if [[ "${{ env.current_version }}" != "${{ env.published_version }}" ]]; then
             echo "Version bumped from ${{ env.published_version }} to ${{ env.current_version }}"
-            echo "version_bumped=true" >> $GITHUB_ENV
+            echo "version_bumped=true" > check-version-bump.txt
           else
             echo "No version bump"
-            echo "version_bumped=false" >> $GITHUB_ENV
+            echo "version_bumped=false" > check-version-bump.txt
           fi
+          echo "version_bumped=$(cat check-version-bump.txt)" >> $GITHUB_ENV
         env:
           current_version: ${{ env.current_version }}
           published_version: ${{ env.published_version }}
