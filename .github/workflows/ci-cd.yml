@@ -87,7 +87,7 @@ jobs:
           version_bumped: ${{ env.version_bumped }}
 
       - name: Create release
-        if: env.version_bumped == 'true'
+        if: steps.check-version-bump.outputs.version_bumped == 'true'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
