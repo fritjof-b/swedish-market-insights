@@ -68,7 +68,7 @@ jobs:
           pip install -q --no-cache-dir swedish_market_insights
           pip show swedish_market_insights > package_info.txt
           grep "Version" package_info.txt | awk '{print $2}' > published_version.txt
-          echo "current_version=$(cat published_version.txt)" >> $GITHUB_ENV
+          echo "published_version=$(cat published_version.txt)" >> $GITHUB_ENV
           
       - name: Check version bump
         id: check-version-bump
