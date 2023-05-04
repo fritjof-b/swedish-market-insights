@@ -82,9 +82,11 @@ jobs:
             echo "No version bump"
             echo "version_bumped=false" >> $GITHUB_ENV
           fi
+        env:
+          VERSION_BUMPED: ${{ env.version_bumped }}
 
       - name: Create release
-        if: steps.check-version-bump.outputs.version_bumped == 'true'
+        if: env.VERSION_BUMPED == 'true'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
