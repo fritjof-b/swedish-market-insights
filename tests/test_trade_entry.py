@@ -54,3 +54,7 @@ def complete_row():
 def test_trade_entry_from_row_creation_successful(complete_row, complete_trade_entry):
     trade_entry_to_test = TradeEntry.from_row(complete_row)
     assert trade_entry_to_test == complete_trade_entry
+
+
+def test_total_price_paid_is_correct(complete_trade_entry):
+    assert complete_trade_entry.trade_price == 1850.0

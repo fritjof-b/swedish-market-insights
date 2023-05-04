@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 
 from .utils import (
@@ -27,10 +27,15 @@ class TradeEntry:
     currency: "str"
     status: "str"
     details: "str"
+    trade_price: "float" = field(init=False)
+
+    def __post_init__(self):
+        # TODO: This is a hack, find a better way to do this
+        super.__setattr__(self, "trade_price", self.volume * self.price)
 
     @staticmethod
     def from_row(row) -> "TradeEntry":
-        date = date_from_string(row[0])
+        date_ = date_from_string(row[0])
         issuer = row[1]
         person = row[2]
         position = row[3]
@@ -48,7 +53,7 @@ class TradeEntry:
         details = row[15]
 
         return TradeEntry(
-            date=date,
+            date=date_,
             issuer=issuer,
             person=person,
             position=position,
