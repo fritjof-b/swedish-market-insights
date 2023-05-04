@@ -60,7 +60,7 @@ jobs:
         id: get-current-version
         run: |
           poetry version --short > current_version.txt
-          echo "current_version=$(cat current_version.txt)"
+          echo "current_version=$(cat current_version.txt)" >> $GITHUB_ENV
 
       - name: Get published version
         id: get-published-version
@@ -68,31 +68,31 @@ jobs:
           pip install -q --no-cache-dir swedish_market_insights
           pip show swedish_market_insights > package_info.txt
           grep "Version" package_info.txt | awk '{print $2}' > published_version.txt
-          echo "current_version=$(cat published_version.txt)"
+          echo "current_version=$(cat published_version.txt)" >> $GITHUB_ENV
           
       - name: Check version bump
         id: check-version-bump
         run: |
-          current_version=$(cat current_version.txt)
-          published_version=$(cat published_version.txt)
-          if [[ "$current_version" != "$published_version" ]]; then
-            echo "Version bumped from $published_version to $current_version"
+          if [[ "${{ env.current_version }}" != "${{ env.published_version }}" ]]; then
+            echo "Version bumped from ${{ env.published_version }} to ${{ env.current_version }}"
             echo "version_bumped=true" >> $GITHUB_ENV
           else
             echo "No version bump"
             echo "version_bumped=false" >> $GITHUB_ENV
           fi
         env:
-          VERSION_BUMPED: ${{ env.version_bumped }}
+          current_version: ${{ env.current_version }}
+          published_version: ${{ env.published_version }}
+          version_bumped: ${{ env.version_bumped }}
 
       - name: Create release
-        if: env.VERSION_BUMPED == 'true'
+        if: env.version_bumped == 'true'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.get-current-version.outputs.current_version }}
-          release_name: Release v${{ steps.get-current-version.outputs.current_version }}
+          tag_name: v${{ env.current_version }}
+          release_name: Release v${{ env.current_version }}
           draft: false
           prerelease: false
 
