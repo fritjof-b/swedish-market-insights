@@ -60,7 +60,7 @@ jobs:
         id: get-current-version
         run: |
           poetry version --short > current_version.txt
-          echo "::set-output name=current_version::$(cat current_version.txt)"
+          echo "current_version=$(cat current_version.txt)"
 
       - name: Get published version
         id: get-published-version
@@ -68,7 +68,7 @@ jobs:
           pip install -q --no-cache-dir swedish_market_insights
           pip show swedish_market_insights > package_info.txt
           grep "Version" package_info.txt | awk '{print $2}' > published_version.txt
-          echo "::set-output name=published_version::$(cat published_version.txt)"
+          echo "current_version=$(cat published_version.txt)"
           
       - name: Check version bump
         id: check-version-bump
@@ -77,10 +77,10 @@ jobs:
           published_version=$(cat published_version.txt)
           if [[ "$current_version" != "$published_version" ]]; then
             echo "Version bumped from $published_version to $current_version"
-            echo "::set-output name=version_bumped::true"
+            echo "version_bumped=true" >> $GITHUB_ENV
           else
             echo "No version bump"
-            echo "::set-output name=version_bumped::false"
+            echo "version_bumped=false" >> $GITHUB_ENV
           fi
 
       - name: Create release
