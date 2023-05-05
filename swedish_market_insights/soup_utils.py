@@ -1,18 +1,21 @@
 from bs4 import BeautifulSoup
+import pandas as pd
 
-from .trade import TradeEntry
 
+def get_trade_entries_from_page(page_content: bytes) -> pd.DataFrame:
+    soup = BeautifulSoup(page_content, "html.parser")
+    table = soup.find("table")
+    rows = table.find_all("tr")
 
-def get_trade_entries_from_page(page: bytes) -> list[TradeEntry]:
-    trade_entries = []
-    soup = BeautifulSoup(page, "html.parser")
-    table_rows = soup.find_all("tr")
-    for row in table_rows[1:]:
-        row_data = [
-            tag.get_text(strip=True).replace("\xa0", " ") for tag in row.find_all("td")
-        ]
-        trade_entries.append(TradeEntry.from_row(row_data))
-    return trade_entries
+    header_row = rows.pop(0)
+    columns = [col.get_text(strip=True) for col in header_row.find_all("th")]
+
+    data = []
+    for row in rows:
+        data.append([col.get_text(strip=True) for col in row.find_all("td")])
+
+    df = pd.DataFrame(data, columns=columns)
+    return df
 
 
 def find_href_for_next_page(page: bytes) -> str:

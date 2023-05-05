@@ -1,16 +1,15 @@
 import logging
 from datetime import date
 
+import pandas as pd
 import requests
 
+from .constants import INSIDE_TRADES_BASE_URL
 from .soup_utils import get_trade_entries_from_page, find_href_for_next_page
-from .trade import TradeEntry
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
-BASE_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/Search/Search?"
 
 
 def _get_trades_by_date_query(
@@ -18,7 +17,7 @@ def _get_trades_by_date_query(
     to_query: str,
     from_date: date,
     to_date: date,
-) -> list[TradeEntry]:
+) -> pd.DataFrame:
     """
     Helper function to fetch trades by date query.
 
@@ -29,26 +28,28 @@ def _get_trades_by_date_query(
     :return: List of TradeEntry objects"""
     params = {from_query: from_date, to_query: to_date}
 
-    result = []
-    response = requests.get(BASE_URL, params=params)
-    result += get_trade_entries_from_page(response.content)
+    result = pd.DataFrame()
+    response = requests.get(INSIDE_TRADES_BASE_URL, params=params)
+    result = pd.concat(
+        [result, get_trade_entries_from_page(response.content)], ignore_index=True
+    )
     while next_page_href := find_href_for_next_page(response.content):
-        next_page_url = f"{BASE_URL}{next_page_href}"
+        next_page_url = f"{INSIDE_TRADES_BASE_URL}{next_page_href}"
         logging.info(f"Fetching next page: {next_page_url}")
         response = requests.get(next_page_url)
-        result += get_trade_entries_from_page(response.content)
+        result = pd.concat(
+            [result, get_trade_entries_from_page(response.content)], ignore_index=True
+        )
 
     return result
 
 
-class FiClient:
-    def __init__(self) -> None:
-        pass
+class InsideTradesAPI:
 
     @staticmethod
     def get_trades_by_publish_date(
         from_date: date = date.today(), to_date: date = date.today()
-    ) -> list[TradeEntry]:
+    ) -> pd.DataFrame:
         """
         Fetch trades by publish date.
 
@@ -62,7 +63,7 @@ class FiClient:
     @staticmethod
     def get_trades_by_transaction_date(
         from_date: date = date.today(), to_date: date = date.today()
-    ) -> list[TradeEntry]:
+    ) -> pd.DataFrame:
         """
         Fetch trades by transaction date.
 

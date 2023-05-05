@@ -1,39 +1,47 @@
 # Swedish Market Insights
 
 SMI is a small package for fetching inside trades made in Sweden.
-The data is collected with `requests` and parsed with `BeautifulSoup4`.
+The data is collected with `requests` and parsed with `BeautifulSoup4`
+and returned as a `pandas.DataFrame`.
+
 All data is publicly available on Finansinspektionen's [website](https://fi.se/).
 
 ## Installation
 
 ```
-pip install insyn
+pip install swedish-market-insights
 ```
 
 ## Usage
 
 ```python3
-from swedish_market_insights import ficlient
+from swedish_market_insights.inside_trades import InsideTradesAPI
+from swedish_market_insights.short_positions import ShortPositionsAPI
 
-api = ficlient.FiClient()
-recent_inside_trades = api.get_trades_by_transaction_date()
+recent_inside_trades = InsideTradesAPI.get_trades_by_transaction_date()
+current_short_positions = ShortPositionsAPI.get_current_short_positions()
 ```
 
 ## Features
 
+### Inside Trades
 - Fetch inside trades by transaction date
 - Fetch inside trades by publication date
+
+### Short Positions
+- Fetch current short positions
+- Fetch historical short positions
+- Fetch aggregated short positions
 
 ## Examples
 
 ### Fetch inside trades by transaction date
 
 ```python3
-from swedish_market_insights import ficlient
+from swedish_market_insights.inside_trades import InsideTradesAPI
 from datetime import date
 
-api = ficlient.FiClient()
-trades = api.get_trades_by_transaction_date(
+trades = InsideTradesAPI.get_trades_by_transaction_date(
     from_date=date(2020, 1, 1),
     to_date=date(2020, 1, 31))
 ```
@@ -41,13 +49,20 @@ trades = api.get_trades_by_transaction_date(
 ### Fetch inside trades by publication date
 
 ```python3
+from swedish_market_insights.inside_trades import InsideTradesAPI
 from datetime import date
-from swedish_market_insights import ficlient
 
-api = ficlient.FiClient()
-trades = api.get_trades_by_publish_date(
+trades = InsideTradesAPI.get_trades_by_publish_date(
     from_date=date(2022, 10, 8),
     to_date=date(2022, 10, 10))
+```
+
+### Fetch current short positions
+
+```python3
+from swedish_market_insights.short_positions import ShortPositionsAPI
+
+current_short_positions = ShortPositionsAPI.get_current_short_positions()
 ```
 
 ## Contributing
