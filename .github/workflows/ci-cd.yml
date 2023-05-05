@@ -80,6 +80,7 @@ jobs:
             echo "No version bump"
             echo "version_bumped=false" > check-version-bump.txt
           fi
+          echo "version_bumped=$(cat check-version-bump.txt)"
           echo "version_bumped=$(cat check-version-bump.txt)" >> $GITHUB_OUTPUT
         env:
           current_version: ${{ env.current_version }}

@@ -6,7 +6,9 @@ All data is publicly available on Finansinspektionen's [website](https://fi.se/)
 
 ## Installation
 
-`pip install insyn`
+```
+pip install insyn
+```
 
 ## Usage
 
