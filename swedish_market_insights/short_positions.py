@@ -1,8 +1,15 @@
-import pandas as pd
-import requests
+import logging
 from io import BytesIO
 
+import pandas as pd
+import requests
+
 from .constants import SHORT_POSITIONS_BASE_URL
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 N_SKIP_ROWS = 5
 
@@ -10,14 +17,17 @@ N_SKIP_ROWS = 5
 class ShortPositionsAPI:
     @staticmethod
     def get_current_short_positions() -> pd.DataFrame:
+        logging.info("Fetching current short positions")
         return ShortPositionsAPI._fetch_file_by_type("GetAktuellFile")
 
     @staticmethod
     def get_historical_short_positions() -> pd.DataFrame:
+        logging.info("Fetching historical short positions")
         return ShortPositionsAPI._fetch_file_by_type("GetHistFile")
 
     @staticmethod
     def get_aggregated_short_positions() -> pd.DataFrame:
+        logging.info("Fetching aggregated short positions")
         return ShortPositionsAPI._fetch_file_by_type("GetBlankningsregisterAggregat")
 
     @staticmethod
