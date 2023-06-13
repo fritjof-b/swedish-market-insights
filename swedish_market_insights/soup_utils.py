@@ -9,10 +9,7 @@ def get_trade_entries_from_page(page_content: bytes) -> pd.DataFrame:
 
     header_row = rows.pop(0)
     columns = [col.get_text(strip=True) for col in header_row.find_all("th")]
-
-    data = []
-    for row in rows:
-        data.append([col.get_text(strip=True) for col in row.find_all("td")])
+    data = [[col.get_text(strip=True) for col in row.find_all("td")] for row in rows]
 
     df = pd.DataFrame(data, columns=columns)
     return df

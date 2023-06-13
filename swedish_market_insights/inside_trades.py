@@ -45,7 +45,6 @@ def _get_trades_by_date_query(
 
 
 class InsideTradesAPI:
-
     @staticmethod
     def get_trades_by_publish_date(
         from_date: date = date.today(), to_date: date = date.today()
